@@ -1,0 +1,60 @@
+root = true
+
+[*]
+
+indent_size = 4
+indent_style = space
+tab_width = 4
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Visual Studio Spell Checker
+spelling_exclusion_path = .\exclusion.dic
+spelling_languages = en-us
+
+[*.{appxmanifest,axml,build,config,csproj,dbml,discomap,dtd,json,jsproj,lsproj,njsproj,nuspec,proj,props,resjson,resw,resx,StyleCop,targets,props,tasks,vbproj,yml,xml,xsd}]
+indent_style = space
+indent_size = 2
+tab_width = 2
+
+# C# files
+[*.cs]
+
+# Put any C# specific settings here
+dotnet_code_quality.CA1062.null_check_validation_methods = NotNull
+dotnet_code_quality.CA1000.api_surface = private, internal
+
+# S2094 // Classes should not be empty
+dotnet_diagnostic.S2094.severity = suggestion
+
+# SA1402 // File may only contain a single type
+dotnet_diagnostic.SA1402.severity = none
+
+# S4023 // Interfaces should not be empty
+dotnet_diagnostic.S4023.severity = suggestion
+
+# Prefer method-like constructs to have a block body
+csharp_style_expression_bodied_methods = true:error
+csharp_style_expression_bodied_constructors = true:error
+csharp_style_expression_bodied_operators = true:error
+csharp_place_expr_method_on_single_line = false
+
+# Prefer property-like constructs to have an expression-body
+csharp_style_expression_bodied_properties = true:error
+csharp_style_expression_bodied_indexers = true:error
+csharp_style_expression_bodied_accessors = true:error
+
+# static fields in PascalCase
+dotnet_naming_rule.static_fields_should_have_prefix.severity = warning
+dotnet_naming_rule.static_fields_should_have_prefix.symbols  = static_fields
+dotnet_naming_rule.static_fields_should_have_prefix.style    = static_prefix_style
+dotnet_naming_symbols.static_fields.applicable_kinds   = field
+dotnet_naming_symbols.static_fields.required_modifiers = static
+dotnet_naming_symbols.static_fields.applicable_accessibilities = private, internal, private_protected
+dotnet_naming_style.static_prefix_style.required_prefix =
+dotnet_naming_style.static_prefix_style.capitalization = pascal_case
+
+# don't have var preferences
+dotnet_diagnostic.IDE0007.severity = none
+dotnet_diagnostic.IDE0008.severity = none

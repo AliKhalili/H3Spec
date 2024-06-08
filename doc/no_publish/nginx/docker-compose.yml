@@ -1,0 +1,31 @@
+version: '3.9'
+
+networks:
+  app-network:
+
+services:
+  app:
+    container_name: h3spec-express-app
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/usr/src/app
+    environment:
+      - NODE_ENV=production
+    networks:
+      - app-network
+    restart: always
+
+  nginx:
+    container_name: h3spec-nginx
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    ports:
+      - 8080:8080
+    restart: always
+    networks:
+      - app-network
+    depends_on:
+      - app

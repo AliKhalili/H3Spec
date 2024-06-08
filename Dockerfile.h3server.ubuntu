@@ -1,0 +1,39 @@
+# syntax=docker/dockerfile:1
+FROM mcr.microsoft.com/dotnet/sdk:9.0.100-preview.2-jammy AS build
+
+WORKDIR /source
+
+COPY src/h3server/*.csproj ./
+RUN dotnet restore
+
+COPY src/h3server/. ./
+RUN dotnet publish --no-restore -c Release -o /app
+
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:9.0.0-preview.3-jammy-amd64
+
+# install msquic library in order to use QUIC and HTTP/3
+RUN apt-get update \
+    && apt-get install -y wget \
+    && wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
+    && dpkg -i packages-microsoft-prod.deb \
+    && rm packages-microsoft-prod.deb \
+    && apt-get update \
+    && apt install libmsquic -y \
+    && rm -rf /var/lib/apt/lists/*
+
+EXPOSE 6001
+
+WORKDIR /app
+COPY /certs/certificate.pfx ./certs/certificate.pfx
+ENV ASPNETCORE_Kestrel__Certificates__Default__Password="1234567"
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/app/certs/certificate.pfx"
+# ENV ASPNETCORE_URLS="https://+:6001;"
+
+COPY --from=build /app .
+RUN chown $APP_UID ./certs/certificate.pfx
+USER $APP_UID
+
+ENTRYPOINT ["dotnet", "H3Server.dll"]
+
+
+
