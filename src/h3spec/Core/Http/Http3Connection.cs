@@ -26,4 +26,12 @@ internal class Http3Connection(QuicConnection quicConnection)
         _streams.Add(stream);
         return stream;
     }
+
+    public void Close()
+    {
+        if (quicConnection != null)
+        {
+            quicConnection.CloseAsync((long)Http3ErrorCode.NoError).GetAwaiter().GetResult();
+        }
+    }
 }

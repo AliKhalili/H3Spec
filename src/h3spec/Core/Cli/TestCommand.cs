@@ -59,6 +59,7 @@ namespace H3Spec.Core.Cli
                             WriteRow($"   expected: {result.Expected}", Color.Grey);
                             WriteRow($"   actual: {result.Actual}", Color.DarkRed_1);
                         }
+                        connection.Close();
                     }
                     catch (Exception exception)
                     {
