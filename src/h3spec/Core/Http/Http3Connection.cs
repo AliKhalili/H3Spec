@@ -2,7 +2,7 @@
 
 namespace H3Spec.Core.Http;
 
-internal class Http3Connection(QuicConnection quicConnection)
+internal class Http3Connection(QuicConnection quicConnection) : IAsyncDisposable
 {
     public QuicConnection QuicConnection => quicConnection;
     private readonly List<Http3Stream> _streams = new();
@@ -25,5 +25,13 @@ internal class Http3Connection(QuicConnection quicConnection)
         streamContext.Start();
         _streams.Add(stream);
         return stream;
+    }
+
+    public void Close()
+    {
+        if (quicConnection != null)
+        {
+            quicConnection.CloseAsync((long)Http3ErrorCode.NoError).GetAwaiter().GetResult();
+        }
     }
 }
