@@ -4,7 +4,7 @@ H3Spec is a conformance testing tool for HTTP/3 implementations. It sends variou
 
 H3Spec is implemented on top of .NET's `System.Net.Quic`, which interoperates with [MsQuic](https://github.com/microsoft/msquic). It also draws inspiration from the ASP.NET Core Kestrel HTTP/3 implementation.
 
-For more detailed information on how this tool works, you can refer to the blog post **"Hands-On HTTP/3 with .NET: Creating a Conformance Testing Tool from Scratch"**.
+For more detailed information on how this tool works, you can refer to the blog post [**"Hands-On HTTP/3 with .NET: Creating a Conformance Testing Tool from Scratch"**](https://medium.com/@Alikhalili/hands-on-http-3-with-net-fcd38cf7ad05).
 
 ## Quick Start
 
